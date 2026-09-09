@@ -1,4 +1,4 @@
-﻿// DumeClick - Interacciones y Calculadora de Presupuesto
+﻿// DumeClick - Interacciones y Contacto por Instagram
 document.addEventListener('DOMContentLoaded', () => {
   // Mobile Menu Toggle
   const menuBtn = document.getElementById('menu-btn');
@@ -17,74 +17,64 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Calculadora de Presupuesto Dinámica
-  const basePrices = {
-    'landing': { name: 'Landing Page Express', price: 99 },
-    'business': { name: 'Web Negocio / Corporativa', price: 180 },
-    'booking': { name: 'Web de Reservas y Citas', price: 240 },
-    'event': { name: 'Web para Evento / Celebración', price: 190 },
-    'shop': { name: 'Tienda Online / Catálogo', price: 290 }
-  };
+  // Planificador de Proyecto para Instagram
+  const projectTypeSelect = document.getElementById('project-type');
+  const featureCheckboxes = document.querySelectorAll('.project-feature');
+  const igSummary = document.getElementById('project-summary-text');
+  const copyBtn = document.getElementById('copy-ig-btn');
+  const copySuccess = document.getElementById('copy-success');
 
-  const extraPrices = {
-    'extra-seo': { name: 'SEO Local y Google Maps', price: 40 },
-    'extra-domain': { name: 'Dominio y Hosting (1 año)', price: 45 },
-    'extra-payment': { name: 'Pasarela de Pago (Bizum/Tarjeta)', price: 60 },
-    'extra-speed': { name: 'Optimización de Carga Ultrarrápida', price: 30 }
-  };
+  function updateSummary() {
+    if (!projectTypeSelect || !igSummary) return;
 
-  const projectTypeSelect = document.getElementById('calc-type');
-  const extraCheckboxes = document.querySelectorAll('.calc-extra');
-  const priceDisplay = document.getElementById('calc-total');
-  const whatsappBtn = document.getElementById('calc-whatsapp-btn');
+    const selectedType = projectTypeSelect.options[projectTypeSelect.selectedIndex].text;
+    const selectedFeatures = [];
 
-  function calculateTotal() {
-    if (!projectTypeSelect || !priceDisplay) return;
-
-    const selectedTypeKey = projectTypeSelect.value;
-    const baseObj = basePrices[selectedTypeKey] || basePrices['landing'];
-    let total = baseObj.price;
-    const selectedExtras = [];
-
-    extraCheckboxes.forEach(cb => {
-      if (cb.checked && extraPrices[cb.id]) {
-        total += extraPrices[cb.id].price;
-        selectedExtras.push(extraPrices[cb.id].name);
+    featureCheckboxes.forEach(cb => {
+      if (cb.checked) {
+        const labelText = cb.closest('label').querySelector('.feature-label').textContent.trim();
+        selectedFeatures.push(labelText);
       }
     });
 
-    // Actualizar pantalla
-    priceDisplay.textContent = `${total}€`;
+    let message = `¡Hola Oliver! Te escribo desde la web de DumeClick para consultar sobre una página web:\n\n`;
+    message += `📌 Tipo de proyecto: ${selectedType}\n`;
 
-    // Preparar mensaje de WhatsApp
-    let message = `¡Hola Oliver! He usado la calculadora de DumeClick y me gustaría pedir presupuesto para:%0A%0A`;
-    message += `📌 *Tipo de Web:* ${baseObj.name} (${baseObj.price}€)%0A`;
-
-    if (selectedExtras.length > 0) {
-      message += `⚡ *Extras seleccionados:*%0A`;
-      selectedExtras.forEach(item => {
-        message += `  • ${item}%0A`;
+    if (selectedFeatures.length > 0) {
+      message += `⚡ Características de interés:\n`;
+      selectedFeatures.forEach(item => {
+        message += `  • ${item}\n`;
       });
     }
 
-    message += `%0A💰 *Estimación total:* ${total}€ aprox.%0A%0A¿Podemos hablar de los detalles? ¡Gracias!`;
+    message += `\n¿Podemos hablar de los detalles por aquí en Instagram? ¡Gracias!`;
 
-    if (whatsappBtn) {
-      // Número o enlace directo de WhatsApp (WhatsApp universal)
-      whatsappBtn.href = `https://wa.me/34600000000?text=${message}`;
-    }
+    igSummary.value = message;
   }
 
   if (projectTypeSelect) {
-    projectTypeSelect.addEventListener('change', calculateTotal);
+    projectTypeSelect.addEventListener('change', updateSummary);
   }
 
-  extraCheckboxes.forEach(cb => {
-    cb.addEventListener('change', calculateTotal);
+  featureCheckboxes.forEach(cb => {
+    cb.addEventListener('change', updateSummary);
   });
 
-  // Inicializar cálculo al cargar
-  calculateTotal();
+  if (copyBtn && igSummary) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText(igSummary.value).then(() => {
+        if (copySuccess) {
+          copySuccess.classList.remove('hidden');
+          setTimeout(() => {
+            copySuccess.classList.add('hidden');
+          }, 3000);
+        }
+      });
+    });
+  }
+
+  // Inicializar resumen
+  updateSummary();
 
   // FAQ Accordion
   const faqItems = document.querySelectorAll('.faq-item');
@@ -109,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Smooth year in footer
+  // Footer Year
   const yearEl = document.getElementById('current-year');
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();

@@ -46,7 +46,7 @@ html {
 }
 
 .glass-nav {
-  background: rgba(7, 11, 18, 0.85);
+  background: rgba(7, 11, 18, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -67,6 +67,26 @@ html {
 
 .glow-button:hover {
   box-shadow: 0 0 25px rgba(0, 210, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Instagram Gradient & Glow */
+.ig-gradient {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.ig-gradient-text {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-ig {
+  box-shadow: 0 0 25px rgba(220, 39, 67, 0.45);
+}
+
+.glow-ig:hover {
+  box-shadow: 0 0 35px rgba(220, 39, 67, 0.65);
   transform: translateY(-2px);
 }
 
@@ -92,6 +112,22 @@ html {
   border-radius: 50%;
 }
 
+/* Pulse animation */
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s infinite ease-in-out;
+}
+
 /* Card hover transitions */
 .service-card {
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -112,8 +148,8 @@ html {
   content: '';
   position: absolute;
   inset: -10px;
-  background: radial-gradient(circle, rgba(0, 210, 255, 0.35) 0%, rgba(2, 132, 199, 0.1) 60%, transparent 75%);
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.3) 0%, rgba(2, 132, 199, 0.1) 60%, transparent 75%);
   z-index: 0;
   border-radius: 2rem;
-  filter: blur(20px);
+  filter: blur(25px);
 }
