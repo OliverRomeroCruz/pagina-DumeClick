@@ -1,4 +1,4 @@
-﻿/* Estilos personalizados y utilidades de efectos para DumeClick */
+/* Estilos personalizados y utilidades de efectos para DumeClick */
 :root {
   --color-bg: #070b12;
   --color-surface: #0f172a;
@@ -92,6 +92,9 @@ html {
   background: linear-gradient(135deg, #00d2ff 0%, #38bdf8 50%, #818cf8 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
 }
 
 /* Background Animated Blobs */
@@ -144,3 +147,117 @@ html {
   border-radius: 2rem;
   filter: blur(25px);
 }
+
+/* VengeanceUI Flip-Fade Text Animations (3D perspective per letter) */
+.flip-fade-container {
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 1.35em;
+  height: 1.35em;
+  overflow: visible;
+}
+
+.flip-fade-viewport {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  line-height: 1.35;
+  overflow: visible;
+}
+
+.flip-fade-word {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+
+.flip-fade-space {
+  display: inline-block;
+  width: 0.28em;
+}
+
+.flip-fade-letter {
+  display: inline-block;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-origin: 50% 60%;
+  will-change: transform, opacity;
+  color: #00d2ff;
+  text-shadow: 0 0 24px rgba(0, 210, 255, 0.45);
+  transition: transform 0.5s cubic-bezier(0.2, 0.65, 0.3, 0.9),
+              opacity 0.5s cubic-bezier(0.2, 0.65, 0.3, 0.9),
+              filter 0.5s cubic-bezier(0.2, 0.65, 0.3, 0.9);
+}
+
+.flip-fade-letter.is-enter {
+  transform: translateY(16px) rotateX(80deg);
+  opacity: 0;
+  filter: blur(5px);
+}
+
+.flip-fade-letter.is-active {
+  transform: translateY(0) rotateX(0deg);
+  opacity: 1;
+  filter: blur(0px);
+}
+
+.flip-fade-letter.is-exit {
+  transform: translateY(-16px) rotateX(-80deg);
+  opacity: 0;
+  filter: blur(5px);
+  transition: transform 0.35s ease-in,
+              opacity 0.35s ease-in,
+              filter 0.35s ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-fade-letter {
+    transition: none !important;
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Scroll Reveal Animations (Aparición progresiva al hacer scroll) */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Retardos escalonados para tarjetas y listas */
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+/* Inmediatez en hover tras la animación de entrada */
+.reveal-on-scroll.is-revealed:hover {
+  transition-duration: 0.3s !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
